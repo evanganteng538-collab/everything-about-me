@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Everything About Me</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #050817;
+  color: white;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.screen {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 25px;
+  position: relative;
+  overflow: hidden;
+}
+
+#opening {
+  background:
+    radial-gradient(circle at 50% 50%, #172e58, transparent 50%),
+    #050817;
+  transition: opacity 1s, transform 1s;
+}
+
+.glow {
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  background: #00d9ff;
+  opacity: .12;
+  filter: blur(100px);
+  border-radius: 50%;
+  animation: move 6s infinite alternate;
+}
+
+@keyframes move {
+  to { transform: translate(100px, -60px); }
+}
+
+.intro {
+  position: relative;
+  z-index: 2;
+  animation: appear 2s ease;
+}
+
+.small {
+  color: #9cb9ff;
+  letter-spacing: 6px;
+  font-size: 11px;
+  margin-bottom: 25px;
+}
+
+h1 {
+  font-size: clamp(35px, 8vw, 75px);
+  letter-spacing: 5px;
+  background: linear-gradient(
+    90deg, #00eaff, #a78bfa, #00ffc3
+  );
+  background-size: 200%;
+  color: transparent;
+  background-clip: text;
+  animation: shine 4s infinite linear;
+}
+
+@keyframes shine {
+  to { background-position: 200%; }
+}
+
+.desc {
+  color: #aab7d5;
+  margin: 25px 0 35px;
+  letter-spacing: 2px;
+  font-size: 13px;
+}
+
+button {
+  padding: 15px 35px;
+  background: transparent;
+  border: 1px solid #00eaff;
+  border-radius: 30px;
+  color: white;
+  letter-spacing: 3px;
+  cursor: pointer;
+  transition: .4s;
+}
+
+button:hover {
+  background: #00eaff;
+  color: #050817;
+  box-shadow: 0 0 30px #00eaff;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(35px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* MAIN PAGE */
+
+#main {
+  display: none;
+  background:
+    radial-gradient(circle at top, #14284c, transparent 50%),
+    #050817;
+  flex-direction: column;
+  gap: 35px;
+  padding: 60px 20px;
+}
+
+#main h2 {
+  font-size: clamp(25px, 6vw, 45px);
+  letter-spacing: 4px;
+  color: #00eaff;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  width: 100%;
+  max-width: 950px;
+}
+
+.card {
+  padding: 35px 15px;
+  border: 1px solid #ffffff25;
+  background: #101b32aa;
+  border-radius: 18px;
+  transition: .4s;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  border-color: #00eaff;
+  box-shadow: 0 0 25px #00eaff33;
+}
+
+.card h3 {
+  font-size: clamp(13px, 2.5vw, 22px);
+  margin-bottom: 12px;
+  color: #00eaff;
+}
+
+.card p {
+  font-size: 12px;
+  color: #aab7d5;
+  line-height: 1.6;
+}
+
+#detail {
+  display: none;
+  max-width: 650px;
+  width: 100%;
+  padding: 30px;
+  border: 1px solid #00eaff55;
+  border-radius: 18px;
+  background: #101b32;
+  line-height: 1.8;
+}
+
+@media(max-width:600px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- OPENING -->
+
+<section class="screen" id="opening">
+
+  <div class="glow"></div>
+
+  <div class="intro">
+    <p class="small">WELCOME TO MY WEBSITE</p>
+
+    <h1>EVERYTHING<br>ABOUT ME</h1>
+
+    <p class="desc">
+      Get to know me better.
+    </p>
+
+    <button onclick="enterWebsite()">
+      ENTER WEBSITE →
+    </button>
+  </div>
+
+</section>
+
+<!-- MAIN PAGE -->
+
+<section class="screen" id="main">
+
+  <h2>EVERYTHING ABOUT ME</h2>
+
+  <p class="desc">
+    A little space to know more about me.
+  </p>
+
+  <div class="cards">
+
+    <div class="card" onclick="showDetail('minat')">
+      <h3>MINAT</h3>
+      <p>Hal yang membuatku tertarik</p>
+    </div>
+
+    <div class="card" onclick="showDetail('kemampuan')">
+      <h3>KEMAMPUAN</h3>
+      <p>Hal yang bisa aku lakukan</p>
+    </div>
+
+    <div class="card" onclick="showDetail('cita')">
+      <h3>CITA-CITA</h3>
+      <p>Impian masa depanku</p>
+    </div>
+
+  </div>
+
+  <div id="detail">
+    <h2 id="detailTitle"></h2>
+    <p id="detailText"></p>
+    <br>
+    <button onclick="closeDetail()">KEMBALI</button>
+  </div>
+
+</section>
+
+<script>
+
+function enterWebsite() {
+  const opening = document.getElementById("opening");
+  const main = document.getElementById("main");
+
+  opening.style.opacity = "0";
+  opening.style.transform = "scale(1.1)";
+
+  setTimeout(() => {
+    opening.style.display = "none";
+    main.style.display = "flex";
+    main.style.animation = "appear 1.5s ease";
+  }, 1000);
+}
+
+function showDetail(type) {
+  const detail = document.getElementById("detail");
+  const title = document.getElementById("detailTitle");
+  const text = document.getElementById("detailText");
+
+  const data = {
+    minat: [
+      "MINAT",
+      "Saya memiliki minat terhadap teknologi modern, seperti membuat website, coding, desain, dan berbagai hal kreatif lainnya."
+    ],
+    kemampuan: [
+      "KEMAMPUAN",
+      "Saya memiliki kemampuan dalam menggunakan Microsoft Excel, membuat desain, serta mempelajari teknologi dan coding."
+    ],
+    cita: [
+      "CITA-CITA",
+      "Saya bercita-cita menjadi seseorang yang ahli di bidang teknologi dan informatika serta mampu menciptakan sesuatu yang bermanfaat."
+    ]
+  };
+
+  title.textContent = data[type][0];
+  text.textContent = data[type][1];
+
+  detail.style.display = "block";
+  detail.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+function closeDetail() {
+  document.getElementById("detail").style.display = "none";
+}
+
+</script>
+
+</body>
+</html>
